@@ -1,26 +1,16 @@
 import React, { PureComponent } from 'react';
 import { Grid } from 'react-bootstrap';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 import logo from '../images/logo.svg';
 
 import Logo from './Logo.js';
-import LoginForm from './LoginForm.js'
+import LoginForm from './LoginForm.js';
+import {
+  resetLoginForm, submitLoginForm, updateText
+} from '../actions/index.js';
 
 class App extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleReset = this.handleReset.bind(this);
-
-    this.state = {
-      email: '',
-      password: ''
-    }
-  }
-
   render() {
     return (
       <Grid fluid>
@@ -29,37 +19,43 @@ class App extends PureComponent {
         <br/>
 
         <LoginForm
-          email={this.state.email}
-          password={this.state.password}
-          handleChange={this.handleChange}
-          handleLogin={this.handleLogin}
-          handleReset={this.handleReset}
+          email={this.props.sessionReducer.email}
+          password={this.props.sessionReducer.password}
+          handleReset={this.props.handleReset}
+          handleLogin={this.props.handleLogin}
+          handleChange={this.props.handleChange}
         />
       </Grid>
     );
   }
+}
 
-  handleChange(key, value) {
-    this.setState({ [key]: value });
-  }
+function mapStateToProps(state) {
+  console.log(state);
+  return state;
+}
 
-  handleLogin(event) {
-    event.preventDefault();
-
-    let formData = JSON.stringify(this.state);
-    console.log(formData);
-  }
-
-  handleReset(event) {
-    this.setState({
-      email: '',
-      password: ''
-    });
+function mapDispatchToProps(dispatch) {
+  return {
+    handleLogin(email, password) {
+      dispatch(
+        submitLoginForm(email, password)
+      );
+    },
+    handleReset() {
+      dispatch(
+        resetLoginForm()
+      );
+    },
+    handleChange(email, password) {
+      dispatch(
+        updateText(email, password)
+      );
+    }
   }
 }
 
-// export default connect(
-//   null, null
-// )(App);
-
-export default App;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

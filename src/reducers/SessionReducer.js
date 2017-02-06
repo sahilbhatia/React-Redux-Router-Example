@@ -1,18 +1,37 @@
 const initialState = {
+  email: '',
+  password: '',
   loggedIn: false,
   errorMsg: null
 };
 
-function sessionReducer(state = initialState, action) {
-  switch action.type {
-    case 'RESET':
+const sessionReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'RESET_LOGIN_FORM':
       return initialState;
-    case 'LOGIN_SUCCEEDED':
-      return Object.assign({}, ...state, { loggedIn: true })
-    case 'LOGIN_FAILED':
-      return Object.assign({}, ...state, { loggedIn: false, errorMsg: action.errorMsg })
+    case 'INITIATE_LOGIN':
+      return Object.assign(
+        {},
+        ...initialState,
+        state,
+        { loggedIn: true }
+      )
+    case 'TEXT_CHANGED':
+      return Object.assign(
+        {},
+        ...initialState,
+        state,
+        {
+          email: action.email,
+          password: action.password
+        }
+      )
     default:
-      return state
+      return Object.assign(
+        {},
+        ...initialState,
+        state
+      )
   }
 }
 
