@@ -9,27 +9,37 @@ import LoginForm from './LoginForm.js';
 import {
   resetLoginForm, submitLoginForm, updateText
 } from '../actions/index.js';
+import Dashboard from './Dashboard.js';
 
 class App extends PureComponent {
   render() {
-    return (
-      <Grid fluid>
-        <Logo logo={logo} />
+    if (this.props.sessionReducer.loggedIn) {
+      return (
+        <Grid fluid>
+          <Dashboard />
+        </Grid>
+      );
+    }
+    else {
+      return (
+        <Grid fluid>
+          <Logo logo={logo} />
 
-        <br/>
+          <br/>
 
-        <LoginForm
-          email={this.props.sessionReducer.email}
-          emailValidationState={this.props.sessionReducer.emailValidationState}
-          password={this.props.sessionReducer.password}
-          passwordValidationState={this.props.sessionReducer.passwordValidationState}
-          allowSubmission={this.props.sessionReducer.allowSubmission}
-          handleReset={this.props.handleReset}
-          handleLogin={this.props.handleLogin}
-          handleChange={this.props.handleChange}
-        />
-      </Grid>
-    );
+          <LoginForm
+            email={this.props.sessionReducer.email}
+            emailValidationState={this.props.sessionReducer.emailValidationState}
+            password={this.props.sessionReducer.password}
+            passwordValidationState={this.props.sessionReducer.passwordValidationState}
+            allowSubmission={this.props.sessionReducer.allowSubmission}
+            handleReset={this.props.handleReset}
+            handleLogin={this.props.handleLogin}
+            handleChange={this.props.handleChange}
+          />
+        </Grid>
+      );
+    }
   }
 }
 
