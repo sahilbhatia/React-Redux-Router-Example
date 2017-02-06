@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  Col, Form, FormGroup, FormControl, ControlLabel, Checkbox, Button
+  Col, Form, FormGroup, FormControl, ControlLabel, Button
 } from 'react-bootstrap';
 
 class LoginForm extends PureComponent {
@@ -16,7 +16,10 @@ class LoginForm extends PureComponent {
   render() {
     return (
       <Form horizontal onReset={this.handleReset} onSubmit={this.handleSubmission}>
-        <FormGroup controlId="formHorizontalEmail">
+        <FormGroup
+          controlId="formHorizontalEmail"
+          validationState={this.props.emailValidationState}
+        >
           <Col lgOffset={4} componentClass={ControlLabel} lg={1}>
             Email
           </Col>
@@ -32,7 +35,10 @@ class LoginForm extends PureComponent {
           </Col>
         </FormGroup>
 
-        <FormGroup controlId="formHorizontalPassword">
+        <FormGroup
+          controlId="formHorizontalPassword"
+          validationState={this.props.passwordValidationState}
+        >
           <Col lgOffset={4} componentClass={ControlLabel} lg={1}>
             Password
           </Col>
@@ -49,15 +55,13 @@ class LoginForm extends PureComponent {
 
         <FormGroup>
           <Col lgOffset={5} lg={2}>
-            <Checkbox>Remember me</Checkbox>
-          </Col>
-        </FormGroup>
-
-        <FormGroup>
-          <Col lgOffset={5} lg={2}>
             <Button type="reset"> Cancel </Button>
             &nbsp;
-            <Button type="submit" bsStyle="primary"> Sign in </Button>
+            <Button
+              type="submit"
+              bsStyle="primary"
+              disabled={!this.props.allowSubmission}
+            > Sign in </Button>
           </Col>
         </FormGroup>
       </Form>

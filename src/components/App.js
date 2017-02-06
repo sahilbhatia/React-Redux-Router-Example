@@ -20,7 +20,10 @@ class App extends PureComponent {
 
         <LoginForm
           email={this.props.sessionReducer.email}
+          emailValidationState={this.props.sessionReducer.emailValidationState}
           password={this.props.sessionReducer.password}
+          passwordValidationState={this.props.sessionReducer.passwordValidationState}
+          allowSubmission={this.props.sessionReducer.allowSubmission}
           handleReset={this.props.handleReset}
           handleLogin={this.props.handleLogin}
           handleChange={this.props.handleChange}
