@@ -4,15 +4,30 @@ import {
 } from 'react-bootstrap';
 
 class LoginForm extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleLogin = this.props.handleLogin.bind(this);
+    this.handleReset = this.props.handleReset.bind(this);
+  }
+
   render() {
     return (
-      <Form horizontal>
+      <Form horizontal onReset={this.handleReset} onSubmit={this.handleLogin}>
         <FormGroup controlId="formHorizontalEmail">
           <Col lgOffset={4} componentClass={ControlLabel} lg={1}>
             Email
           </Col>
           <Col lg={3}>
-            <FormControl type="email" placeholder="e.g. someone@example.com" autoFocus />
+            <FormControl
+              type="email"
+              placeholder="e.g. someone@example.com"
+              autoFocus
+              name="email"
+              value={this.props.email}
+              onChange={this.handleChange}
+            />
           </Col>
         </FormGroup>
 
@@ -21,7 +36,13 @@ class LoginForm extends PureComponent {
             Password
           </Col>
           <Col lg={3}>
-            <FormControl type="password" placeholder="e.g. password" />
+            <FormControl
+              type="password"
+              placeholder="e.g. password"
+              name="password"
+              value={this.props.password}
+              onChange={this.handleChange}
+            />
           </Col>
         </FormGroup>
 
@@ -40,6 +61,10 @@ class LoginForm extends PureComponent {
         </FormGroup>
       </Form>
     );
+  }
+
+  handleChange(event) {
+    this.props.handleChange(event.target.name, event.target.value)
   }
 }
 
