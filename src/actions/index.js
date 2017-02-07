@@ -12,7 +12,7 @@ export const submitLoginFormAsync = (email, password) => {
       dispatch(
         submitLoginForm(email, password)
       );
-    }, 5000);
+    }, 2000);
   }
 }
 
