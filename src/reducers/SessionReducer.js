@@ -30,29 +30,22 @@ const sessionReducer = (state = initialState, action) => {
     case 'INITIATE_LOGIN':
       return Object.assign(
         {},
-        ...initialState,
         state,
         { loggedIn: true }
       )
     case 'TEXT_CHANGED':
       return Object.assign(
         {},
-        ...initialState,
         state,
+        action,
         {
-          email: action.email,
-          password: action.password,
           allowSubmission: validInput(action),
           emailValidationState: validEmail(action.email) ? 'success' : 'error',
           passwordValidationState: validPassword(action.password) ? 'success' : 'error'
         }
       )
     default:
-      return Object.assign(
-        {},
-        ...initialState,
-        state
-      )
+      return state
   }
 }
 

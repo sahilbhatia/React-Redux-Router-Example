@@ -13,7 +13,7 @@ import Dashboard from './Dashboard.js';
 
 class App extends PureComponent {
   render() {
-    if (this.props.sessionReducer.loggedIn) {
+    if (this.props.loggedIn) {
       return (
         <Grid fluid>
           <Dashboard />
@@ -28,11 +28,11 @@ class App extends PureComponent {
           <br/>
 
           <LoginForm
-            email={this.props.sessionReducer.email}
-            emailValidationState={this.props.sessionReducer.emailValidationState}
-            password={this.props.sessionReducer.password}
-            passwordValidationState={this.props.sessionReducer.passwordValidationState}
-            allowSubmission={this.props.sessionReducer.allowSubmission}
+            email={this.props.email}
+            emailValidationState={this.props.emailValidationState}
+            password={this.props.password}
+            passwordValidationState={this.props.passwordValidationState}
+            allowSubmission={this.props.allowSubmission}
             handleReset={this.props.handleReset}
             handleLogin={this.props.handleLogin}
             handleChange={this.props.handleChange}
@@ -44,8 +44,8 @@ class App extends PureComponent {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
-  return state;
+  console.log(state.sessionReducer);
+  return state.sessionReducer;
 }
 
 function mapDispatchToProps(dispatch) {
