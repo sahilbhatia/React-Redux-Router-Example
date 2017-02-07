@@ -7,7 +7,7 @@ import logo from '../images/logo.svg';
 import Logo from './Logo.js';
 import LoginForm from './LoginForm.js';
 import {
-  resetLoginForm, submitLoginForm, updateText
+  resetLoginForm, submitLoginFormAsync, updateText
 } from '../actions/index.js';
 import Dashboard from './Dashboard.js';
 
@@ -52,7 +52,7 @@ function mapDispatchToProps(dispatch) {
   return {
     handleLogin(email, password) {
       dispatch(
-        submitLoginForm(email, password)
+        submitLoginFormAsync(email, password)
       );
     },
     handleReset() {

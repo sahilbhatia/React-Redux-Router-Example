@@ -6,6 +6,16 @@ export const submitLoginForm = (email, password) => {
   }
 }
 
+export const submitLoginFormAsync = (email, password) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(
+        submitLoginForm(email, password)
+      );
+    }, 5000);
+  }
+}
+
 export const resetLoginForm = () => {
   return {
     type: 'RESET_LOGIN_FORM',
