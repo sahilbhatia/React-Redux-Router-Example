@@ -1,27 +1,18 @@
 import React, { PureComponent } from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Grid } from 'react-bootstrap';
+
+import Header from './Header.js';
 
 class App extends PureComponent {
   render() {
     return (
-      <Grid fluid>
-        <Row>
-          <Col lg={1}>
-            <Link to="/">Home</Link>
-          </Col>
-          <Col lg={1}>
-            <Link to="/login">Login</Link>
-          </Col>
-          <Col lg={1}>
-            <Link to="/dashboard">Dashboard</Link>
-          </Col>
-        </Row>
+      <div className='app-container'>
+        <Header {...this.props} />
 
-        <br />
-
-        {this.props.children}
-      </Grid>
+        <Grid fluid>
+          {this.props.children}
+        </Grid>
+      </div>
     )
   }
 }
