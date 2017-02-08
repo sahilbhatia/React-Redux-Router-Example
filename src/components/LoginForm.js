@@ -109,27 +109,11 @@ function mapStateToProps(state, ownProps) {
   return state.sessionReducer;
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    handleLogin(email, password) {
-      dispatch(
-        actionCreators.submitLoginFormAsync(email, password)
-      );
-    },
-    handleReset() {
-      dispatch(
-        actionCreators.resetLoginForm()
-      );
-    },
-    handleChange(email, password) {
-      dispatch(
-        actionCreators.updateText(email, password)
-      );
-    }
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    handleLogin: actionCreators.submitLoginFormAsync,
+    handleReset: actionCreators.resetLoginForm,
+    handleChange: actionCreators.updateText
+  }
 )(LoginForm);
