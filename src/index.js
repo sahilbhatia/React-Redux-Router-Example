@@ -10,17 +10,22 @@ import rootReducer from './reducers/RootReducer.js'
 import App from './components/App';
 import LoginForm from './components/LoginForm.js';
 import Dashboard from './components/Dashboard.js';
+import { loadState, saveState } from './utils/localStorage.js';
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+const store = createStore(rootReducer, loadState(), applyMiddleware(ReduxThunk));
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store)
 
 const logout = React.createClass({
   componentDidMount() {
-    sessionStorage.loggedIn = false;
+    let currentState = store.getState();
 
-    this.props.router.push('login');
+    if (currentState) {
+      currentState.sessionReducer.loggedIn = false;
+
+      this.props.router.push('login');
+    }
   },
 
   render() {
@@ -29,7 +34,13 @@ const logout = React.createClass({
 });
 
 const noAuthentication = (nextState, replace) => {
-  if (sessionStorage.loggedIn && sessionStorage.loggedIn.toLowerCase() === 'true') {
+  let currentState = store.getState();
+
+  if (
+    currentState &&
+    currentState.sessionReducer.loggedIn &&
+    currentState.sessionReducer.loggedIn === true
+  ) {
     replace({
       pathname: '/'
     });
@@ -37,12 +48,24 @@ const noAuthentication = (nextState, replace) => {
 };
 
 const requireAuthentication = (nextState, replace) => {
-  if (!sessionStorage.loggedIn || sessionStorage.loggedIn.toLowerCase() === 'false') {
+  let currentState = store.getState();
+
+  if (
+    !currentState ||
+    !currentState.sessionReducer.loggedIn ||
+    currentState.sessionReducer.loggedIn === false
+  ) {
     replace({
       pathname: '/login'
     });
   }
 };
+
+store.subscribe(() => {
+  let currentState = store.getState();
+
+  saveState(currentState);
+});
 
 ReactDOM.render(
   <Provider store={store}>

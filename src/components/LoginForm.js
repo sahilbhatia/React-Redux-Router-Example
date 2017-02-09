@@ -109,7 +109,6 @@ class LoginForm extends PureComponent {
 
 // "ownProps" argument contains router's props (provided by react router)
 function mapStateToProps(state, ownProps) {
-  console.log(state.sessionReducer);
   return state.sessionReducer;
 }
 

@@ -1,7 +1,4 @@
 export const submitLoginForm = (email, password) => {
-  // values in sessionStorage are always stored in String format
-  sessionStorage.loggedIn = true
-
   return {
     type: 'INITIATE_LOGIN',
     email,
@@ -20,8 +17,6 @@ export const submitLoginFormAsync = (email, password) => {
 }
 
 export const resetLoginForm = () => {
-  sessionStorage.loggedIn = false
-
   return {
     type: 'RESET_LOGIN_FORM',
     email: '',
