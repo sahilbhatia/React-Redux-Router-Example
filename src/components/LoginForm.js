@@ -8,6 +8,10 @@ import * as actionCreators from '../actions/index.js';
 import Logo from './Logo.js';
 import logoSvg from '../images/logo.svg';
 
+/**
+  This component is responsible for showing the login form.
+*/
+
 class LoginForm extends PureComponent {
   constructor(props) {
     super(props)

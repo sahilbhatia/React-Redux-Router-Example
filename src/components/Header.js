@@ -3,6 +3,14 @@ import { Navbar, NavItem, Nav } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
 
+/**
+  This component is responsible for showing the Navbar,
+  which is visible only when the user is logged in.
+
+  __Example usage:__
+  `<Header {...props} />`
+*/
+
 class Header extends PureComponent {
   render() {
     return (

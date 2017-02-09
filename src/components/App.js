@@ -3,6 +3,11 @@ import { Grid } from 'react-bootstrap';
 
 import Header from './Header.js';
 
+/**
+  This component is responsible for wrapping the Header component and
+  the component rendered by current route.
+*/
+
 class App extends PureComponent {
   render() {
     return (
