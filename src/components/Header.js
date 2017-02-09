@@ -25,8 +25,8 @@ class Header extends PureComponent {
             </LinkContainer>
           </Nav>
           <Nav pullRight>
-            <LinkContainer to='/login'>
-              <NavItem eventKey={1}> Login </NavItem>
+            <LinkContainer to='/logout'>
+              <NavItem eventKey={1}> Logout </NavItem>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
