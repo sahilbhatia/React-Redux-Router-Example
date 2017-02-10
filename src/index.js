@@ -15,7 +15,7 @@ import { loadState, saveState } from './utils/localStorage.js';
 const store = createStore(rootReducer, loadState(), applyMiddleware(ReduxThunk));
 
 // Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(browserHistory, store);
 
 const logout = React.createClass({
   componentDidMount() {
