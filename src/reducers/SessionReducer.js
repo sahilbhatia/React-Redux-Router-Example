@@ -5,7 +5,8 @@ const initialState = {
   emailValidationState: null,
   passwordValidationState: null,
   loggedIn: false,
-  loading: false
+  loading: false,
+  errorMsg: null
 };
 
 const validEmail = (email) => {
@@ -40,11 +41,15 @@ const sessionReducer = (state = initialState, action) => {
         ...state,
         loading: action.loading
       }
-    case 'INITIATE_LOGIN':
+    case 'LOGIN_FAILED':
+    case 'LOGIN_SUCCESSFULL':
       return {
         ...state,
-        loggedIn: true,
-        loading: action.loading
+        email: action.email,
+        password: action.password,
+        loading: action.loading,
+        loggedIn: action.loggedIn,
+        errorMsg: action.errorMsg
       }
     case 'TEXT_CHANGED':
       if (action.email != null) {

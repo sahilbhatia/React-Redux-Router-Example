@@ -89,6 +89,14 @@ class LoginForm extends PureComponent {
               </Col>
             </Row>
           </Form>
+
+          <Row>
+            <Col lgOffset={4} lg={3}>
+              <span className='error'>
+                { this.props.errorMsg }
+              </span>
+            </Col>
+          </Row>
         </Grid>
       );
     }

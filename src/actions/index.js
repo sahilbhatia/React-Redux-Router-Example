@@ -12,12 +12,25 @@ export const stopLoader = () => {
   }
 }
 
-export const submitLoginForm = (email, password) => {
+export const simulateSuccessfullLogin = () => {
   return {
-    type: 'INITIATE_LOGIN',
-    email,
-    password,
-    loading: false
+    type: 'LOGIN_SUCCESSFULL',
+    email: '',
+    password: '',
+    loading: false,
+    loggedIn: true,
+    errorMsg: null
+  }
+}
+
+export const simulateFailedLogin = () => {
+  return {
+    type: 'LOGIN_FAILED',
+    email: '',
+    password: '',
+    loading: false,
+    loggedIn: false,
+    errorMsg: 'Login failed due to invalid credentials!'
   }
 }
 
@@ -25,11 +38,20 @@ export const submitLoginFormAsync = (email, password) => {
   return (dispatch) => {
     dispatch(startLoader());
 
-    setTimeout(() => {
-      dispatch(
-        submitLoginForm(email, password)
-      );
-    }, 5000);
+    if (email === 'demouser@example.com' && password === 'password') {
+      setTimeout(() => {
+        dispatch(
+          simulateSuccessfullLogin()
+        );
+      }, 3000);
+    }
+    else {
+      setTimeout(() => {
+        dispatch(
+          simulateFailedLogin()
+        );
+      }, 3000);
+    }
   }
 }
 
