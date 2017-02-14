@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 
 import * as actionCreators from '../actions/index.js';
+import Loader from './Loader.js';
 
 /**
   This component is responsible for showing the login form.
@@ -28,63 +29,69 @@ class LoginForm extends PureComponent {
   }
 
   render() {
-    return (
-      <Grid fluid>
-        <Form horizontal onReset={this.handleReset} onSubmit={this.handleSubmission}>
-          <Row>
-            <Col lgOffset={4} lg={3}>
-              <FormGroup
-                controlId="formHorizontalEmail"
-                validationState={this.props.emailValidationState}
-              >
-                <ControlLabel>Email</ControlLabel>
-                <FormControl
-                  type="email"
-                  placeholder="e.g. someone@example.com"
-                  autoFocus
-                  name="email"
-                  value={this.props.email}
-                  onChange={this.updateEmail}
-                />
-                <HelpBlock>{ this.state.errors.email }</HelpBlock>
-              </FormGroup>
-            </Col>
-          </Row>
+    if (this.props.loading) {
+      return (
+        <Loader />
+      )
+    } else {
+      return (
+        <Grid fluid>
+          <Form horizontal onReset={this.handleReset} onSubmit={this.handleSubmission}>
+            <Row>
+              <Col lgOffset={4} lg={3}>
+                <FormGroup
+                  controlId="formHorizontalEmail"
+                  validationState={this.props.emailValidationState}
+                >
+                  <ControlLabel>Email</ControlLabel>
+                  <FormControl
+                    type="email"
+                    placeholder="e.g. someone@example.com"
+                    autoFocus
+                    name="email"
+                    value={this.props.email}
+                    onChange={this.updateEmail}
+                  />
+                  <HelpBlock>{ this.state.errors.email }</HelpBlock>
+                </FormGroup>
+              </Col>
+            </Row>
 
-          <Row>
-            <Col lgOffset={4} lg={3}>
-              <FormGroup
-                controlId="formHorizontalPassword"
-                validationState={this.props.passwordValidationState}
-              >
-                <ControlLabel>Password</ControlLabel>
-                <FormControl
-                  type="password"
-                  placeholder="e.g. password"
-                  name="password"
-                  value={this.props.password}
-                  onChange={this.updatePassword}
-                />
-                <HelpBlock>{ this.state.errors.password }</HelpBlock>
-              </FormGroup>
-            </Col>
-          </Row>
+            <Row>
+              <Col lgOffset={4} lg={3}>
+                <FormGroup
+                  controlId="formHorizontalPassword"
+                  validationState={this.props.passwordValidationState}
+                >
+                  <ControlLabel>Password</ControlLabel>
+                  <FormControl
+                    type="password"
+                    placeholder="e.g. password"
+                    name="password"
+                    value={this.props.password}
+                    onChange={this.updatePassword}
+                  />
+                  <HelpBlock>{ this.state.errors.password }</HelpBlock>
+                </FormGroup>
+              </Col>
+            </Row>
 
-          <Row>
-            <Col lgOffset={4} lg={3}>
-              <FormGroup>
-                <Button
-                  type="submit"
-                  bsStyle="primary"
-                  block
-                  disabled={!this.props.allowSubmission}
-                > Sign in </Button>
-              </FormGroup>
-            </Col>
-          </Row>
-        </Form>
-      </Grid>
-    );
+            <Row>
+              <Col lgOffset={4} lg={3}>
+                <FormGroup>
+                  <Button
+                    type="submit"
+                    bsStyle="primary"
+                    block
+                    disabled={!this.props.allowSubmission}
+                  > Sign in </Button>
+                </FormGroup>
+              </Col>
+            </Row>
+          </Form>
+        </Grid>
+      );
+    }
   }
 
   updateEmail(event) {
@@ -131,7 +138,7 @@ class LoginForm extends PureComponent {
   handleSubmission(event) {
     event.preventDefault();
 
-    this.props.handleLogin(this.props.password);
+    this.props.handleLogin(this.props.email, this.props.password);
   }
 
   componentWillReceiveProps(nextProps) {

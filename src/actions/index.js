@@ -1,18 +1,35 @@
+export const startLoader = () => {
+  return {
+    type: 'START_LOADER',
+    loading: true
+  }
+}
+
+export const stopLoader = () => {
+  return {
+    type: 'STOP_LOADER',
+    loading: false
+  }
+}
+
 export const submitLoginForm = (email, password) => {
   return {
     type: 'INITIATE_LOGIN',
     email,
-    password
+    password,
+    loading: false
   }
 }
 
 export const submitLoginFormAsync = (email, password) => {
   return (dispatch) => {
+    dispatch(startLoader());
+
     setTimeout(() => {
       dispatch(
         submitLoginForm(email, password)
       );
-    }, 2000);
+    }, 5000);
   }
 }
 

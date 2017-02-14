@@ -4,7 +4,8 @@ const initialState = {
   allowSubmission: false,
   emailValidationState: null,
   passwordValidationState: null,
-  loggedIn: false
+  loggedIn: false,
+  loading: false
 };
 
 const validEmail = (email) => {
@@ -33,10 +34,17 @@ const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'RESET_LOGIN_FORM':
       return initialState;
+    case 'START_LOADER':
+    case 'STOP_LOADER':
+      return {
+        ...state,
+        loading: action.loading
+      }
     case 'INITIATE_LOGIN':
       return {
         ...state,
-        loggedIn: true
+        loggedIn: true,
+        loading: action.loading
       }
     case 'TEXT_CHANGED':
       if (action.email != null) {
