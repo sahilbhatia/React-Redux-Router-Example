@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  Grid, Row, Col, Form, FormGroup, FormControl, ControlLabel, Button
+  Grid, Row, Col, Form, FormGroup, FormControl, ControlLabel, Button, HelpBlock
 } from 'react-bootstrap';
 
 import * as actionCreators from '../actions/index.js';
-import Logo from './Logo.js';
-import logoSvg from '../images/logo.svg';
 
 /**
   This component is responsible for showing the login form.
@@ -22,79 +20,118 @@ class LoginForm extends PureComponent {
     this.handleSubmission = this.handleSubmission.bind(this);
   }
 
+  state = {
+    errors: {
+      email: null,
+      password: null
+    }
+  }
+
   render() {
     return (
       <Grid fluid>
-        <Row>
-          <Logo logo={logoSvg} />
-        </Row>
-
         <Form horizontal onReset={this.handleReset} onSubmit={this.handleSubmission}>
-          <FormGroup
-            controlId="formHorizontalEmail"
-            validationState={this.props.emailValidationState}
-          >
-            <Col lgOffset={4} componentClass={ControlLabel} lg={1}>
-              Email
+          <Row>
+            <Col lgOffset={4} lg={3}>
+              <FormGroup
+                controlId="formHorizontalEmail"
+                validationState={this.props.emailValidationState}
+              >
+                <ControlLabel>Email</ControlLabel>
+                <FormControl
+                  type="email"
+                  placeholder="e.g. someone@example.com"
+                  autoFocus
+                  name="email"
+                  value={this.props.email}
+                  onChange={this.updateEmail}
+                />
+                <HelpBlock>{ this.state.errors.email }</HelpBlock>
+              </FormGroup>
             </Col>
-            <Col lg={3}>
-              <FormControl
-                type="email"
-                placeholder="e.g. someone@example.com"
-                autoFocus
-                name="email"
-                value={this.props.email}
-                onChange={this.updateEmail}
-              />
-            </Col>
-          </FormGroup>
+          </Row>
 
-          <FormGroup
-            controlId="formHorizontalPassword"
-            validationState={this.props.passwordValidationState}
-          >
-            <Col lgOffset={4} componentClass={ControlLabel} lg={1}>
-              Password
+          <Row>
+            <Col lgOffset={4} lg={3}>
+              <FormGroup
+                controlId="formHorizontalPassword"
+                validationState={this.props.passwordValidationState}
+              >
+                <ControlLabel>Password</ControlLabel>
+                <FormControl
+                  type="password"
+                  placeholder="e.g. password"
+                  name="password"
+                  value={this.props.password}
+                  onChange={this.updatePassword}
+                />
+                <HelpBlock>{ this.state.errors.password }</HelpBlock>
+              </FormGroup>
             </Col>
-            <Col lg={3}>
-              <FormControl
-                type="password"
-                placeholder="e.g. password"
-                name="password"
-                value={this.props.password}
-                onChange={this.updatePassword}
-              />
-            </Col>
-          </FormGroup>
+          </Row>
 
-          <FormGroup>
-            <Col lgOffset={5} lg={2}>
-              <Button type="reset"> Cancel </Button>
-              &nbsp;
-              <Button
-                type="submit"
-                bsStyle="primary"
-                disabled={!this.props.allowSubmission}
-              > Sign in </Button>
+          <Row>
+            <Col lgOffset={4} lg={3}>
+              <FormGroup>
+                <Button
+                  type="submit"
+                  bsStyle="primary"
+                  block
+                  disabled={!this.props.allowSubmission}
+                > Sign in </Button>
+              </FormGroup>
             </Col>
-          </FormGroup>
+          </Row>
         </Form>
       </Grid>
     );
   }
 
   updateEmail(event) {
-    this.props.handleChange(event.target.value, this.props.password);
+    let trimmedEmail = event.target.value.trim();
+    let emailRegex = /\w+@\w+\.\w+/m;
+    let errorMsg = null;
+    let updatedErrors = null;
+
+    if (trimmedEmail === '') {
+      errorMsg = "Email can't be left blank";
+    } else if ( !emailRegex.test(trimmedEmail) ) {
+      errorMsg = "Email format is invalid!";
+    } else {
+      errorMsg = null;
+    }
+
+    updatedErrors = this.state.errors;
+    updatedErrors.email = errorMsg;
+
+    this.setState(updatedErrors);
+    this.props.handleChange({ email: event.target.value });
   }
 
   updatePassword(event) {
-    this.props.handleChange(this.props.email, event.target.value);
+    let password = event.target.value;
+    let errorMsg = null;
+    let updatedErrors = null;
+
+    if (password === '') {
+      errorMsg = "Password can't be left blank";
+    } else if (password.length < 8) {
+      errorMsg = "Password must be at least 8 characters long!";
+    } else {
+      errorMsg = null;
+    }
+
+    updatedErrors = this.state.errors;
+    updatedErrors.password = errorMsg;
+
+    this.setState(updatedErrors);
+    this.props.handleChange({ password: event.target.value });
   }
 
   handleSubmission(event) {
     event.preventDefault();
 
-    this.props.handleLogin(this.props.email, this.props.password);
+    this.props.handleLogin(this.props.password);
   }
 
   componentWillReceiveProps(nextProps) {

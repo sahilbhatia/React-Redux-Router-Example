@@ -24,10 +24,14 @@ export const resetLoginForm = () => {
   }
 }
 
-export const updateText = (email, password) => {
-  return {
-    type: 'TEXT_CHANGED',
-    email,
-    password
+export const updateText = ({ email = null, password = null }) => {
+  let payload = { type: 'TEXT_CHANGED' };
+
+  if (email === null) {
+    return { ...payload, password };
+  } else if (password === null) {
+    return { ...payload, email };
+  } else {
+    return { ...payload, email, password };
   }
 }

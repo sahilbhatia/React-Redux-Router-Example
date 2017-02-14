@@ -19,8 +19,14 @@ const validPassword = (password) => {
   return ( trimmedPassword !== '' && trimmedPassword.length >= 8 )
 }
 
-const validInput = (action) => {
-  return (validEmail(action.email) && validPassword(action.password))
+const validInput = (action, state) => {
+  if (action.email == null) {
+    return ( validEmail(state.email) && validPassword(action.password) );
+  } else if (action.password == null) {
+    return ( validEmail(action.email) && validPassword(state.password) );
+  } else {
+    return ( validEmail(action.email) && validPassword(action.password) );
+  }
 }
 
 const sessionReducer = (state = initialState, action) => {
@@ -33,13 +39,29 @@ const sessionReducer = (state = initialState, action) => {
         loggedIn: true
       }
     case 'TEXT_CHANGED':
-      return {
-        ...state,
-        email: action.email,
-        password: action.password,
-        allowSubmission: validInput(action),
-        emailValidationState: validEmail(action.email) ? 'success' : 'error',
-        passwordValidationState: validPassword(action.password) ? 'success' : 'error'
+      if (action.email != null) {
+        return {
+          ...state,
+          email: action.email,
+          emailValidationState: validEmail(action.email) ? 'success' : 'error',
+          allowSubmission: validInput(action, state)
+        }
+      } else if (action.password != null) {
+        return {
+          ...state,
+          password: action.password,
+          passwordValidationState: validPassword(action.password) ? 'success' : 'error',
+          allowSubmission: validInput(action, state)
+        }
+      } else {
+        return {
+          ...state,
+          email: action.email,
+          password: action.password,
+          allowSubmission: validInput(action), state,
+          emailValidationState: validEmail(action.email) ? 'success' : 'error',
+          passwordValidationState: validPassword(action.password) ? 'success' : 'error'
+        }
       }
     default:
       return state
