@@ -2,13 +2,18 @@ import React, { PureComponent } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 
 /**
-  This component is responsible for showing the company's logo as an Image
+  This component is responsible for showing the company's logo as a responsive Image.
 
-  __Example usage:__
-  `<Logo logo={image-path} />`
+  __Example usage:__  
+  `<Logo logo={replace-me-with-image-path} />`
 */
 
 class Logo extends PureComponent {
+  static propTypes = {
+    /** Expected value of _logo_ is path to the image which needs to be displayed */
+    logo: React.PropTypes.string.isRequired
+  }
+
   render() {
     return (
       <Row>

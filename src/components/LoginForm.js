@@ -6,12 +6,39 @@ import {
 
 import * as actionCreators from '../actions/index.js';
 import Loader from './Loader.js';
+import './LoginForm.css';
 
 /**
-  This component is responsible for showing the login form.
+  This component is responsible for showing the responsive login form.
 */
 
 class LoginForm extends PureComponent {
+  static propTypes = {
+    /** Based on the value of this prop, loader component is shown or hidden */
+    loading: React.PropTypes.bool.isRequired,
+
+    /**
+      Text to be shown in email field.  
+      __Important:__ Never set it to null. Use `''` instead.
+    */
+    email: React.PropTypes.string.isRequired,
+
+    /**
+      Text to be shown in email field.  
+      __Important:__ Never set it to null. Use `''` instead.
+    */
+    password: React.PropTypes.string.isRequired,
+
+    /** Takes name of the `actionCreator` as an argument */
+    handleChange: React.PropTypes.func.isRequired,
+
+    /** Takes name of the `actionCreator` as an argument */
+    handleLogin: React.PropTypes.func.isRequired,
+
+    /** Takes name of the `actionCreator` as an argument */
+    handleReset: React.PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props)
 

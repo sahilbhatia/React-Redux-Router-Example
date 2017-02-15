@@ -4,8 +4,11 @@ import { Grid } from 'react-bootstrap';
 import Header from './Header.js';
 
 /**
-  This component is responsible for wrapping the Header component and
-  the component rendered by current route.
+  It is a container component, responsible for rendering __Header__ component and  
+  providing a __placeholder__ for the component rendered by current route.
+
+  __Notes:__  
+    - This component is rendered ONLY for authenticated users
 */
 
 class App extends PureComponent {

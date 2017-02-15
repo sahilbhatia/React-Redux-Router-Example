@@ -1,0 +1,8 @@
+form {
+  padding: inherit;
+  margin-top: 18ex;
+}
+
+.error {
+  color: red;
+}

@@ -4,10 +4,12 @@ import { Link } from 'react-router';
 import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
 
 /**
-  This component is responsible for showing the Navbar,
-  which is visible only when the user is logged in.
+  This component is responsible for showing the __Navbar__ component.
 
-  __Example usage:__
+  __Notes:__  
+    - This component is rendered ONLY for authenticated users
+
+  __Example usage:__  
   `<Header {...props} />`
 */
 
@@ -34,7 +36,7 @@ class Header extends PureComponent {
           </Nav>
           <Nav pullRight>
             <LinkContainer to='/logout'>
-              <NavItem eventKey={1}> Logout </NavItem>
+              <NavItem eventKey={3}> Logout </NavItem>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
